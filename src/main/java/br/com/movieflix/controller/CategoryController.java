@@ -18,7 +18,9 @@ import java.util.List;
 // TODO: Anotar sobre o arquivo de configuração "application.yaml"
 // TODO: Anotar mais profundamente sobre streams, maps, tolist, orElse e .build()
 // TODO: Anotar mais profundamente sobre as diferenças entre os packages dessa aplicação e suas funções
+// TODO: Anotar sobre os records de request, response e sobre o mapper
 // TODO: Anotar sobre os packages request e response dentro do package controller
+// TODO: Anotar sobre o nullable e sobre o lenght em annotations de column
 
 @RestController
 @RequestMapping("/movieflix/category")
@@ -28,7 +30,7 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<CategoryReponse>> getAllCategories() {
+    public ResponseEntity<List<CategoryReponse>> getAll() {
         List<CategoryReponse> categories = categoryService.findAll()
                 .stream()
                 .map(CategoryMapper::toCategoryReponse)
@@ -38,22 +40,23 @@ public class CategoryController {
     }
 
     @PostMapping
-    public ResponseEntity<CategoryReponse> saveCategory(@RequestBody CategoryRequest request) {
+    public ResponseEntity<CategoryReponse> save(@RequestBody CategoryRequest request) {
         Category newCategory = CategoryMapper.toCategory(request);
         Category savedCategory = categoryService.saveCategory(newCategory);
         return ResponseEntity.status(HttpStatus.CREATED).body(CategoryMapper.toCategoryReponse(savedCategory));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryReponse> getCategoryById(@PathVariable Long id) {
+    public ResponseEntity<CategoryReponse> getById(@PathVariable Long id) {
         return categoryService.findById(id)
                 .map(category -> ResponseEntity.ok(CategoryMapper.toCategoryReponse(category)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategoryById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         if (categoryService.findById(id).isPresent()) {
+            categoryService.deleteById(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         }
         return ResponseEntity.notFound().build();
