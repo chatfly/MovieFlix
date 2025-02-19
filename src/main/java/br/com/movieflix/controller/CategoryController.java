@@ -12,16 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
-// TODO: Anotar que @Autowired é uma forma de fazer injeção de dependência
-// TODO: Anotar que @RequiredArgsConstructor faz todas as injeções de dependência que precisamos
-// TODO: Anotar sobre o arquivo de configuração "application.yaml"
-// TODO: Anotar mais profundamente sobre streams, maps, tolist, orElse e .build()
-// TODO: Anotar mais profundamente sobre as diferenças entre os packages dessa aplicação e suas funções
-// TODO: Anotar sobre os records de request, response e sobre o mapper
-// TODO: Anotar sobre os packages request e response dentro do package controller
-// TODO: Anotar sobre o nullable e sobre o lenght em annotations de column
-
 @RestController
 @RequestMapping("/movieflix/category")
 @RequiredArgsConstructor
