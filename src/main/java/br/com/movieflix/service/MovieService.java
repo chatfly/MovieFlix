@@ -1,10 +1,12 @@
 package br.com.movieflix.service;
 
+import br.com.movieflix.config.JWTUserData;
 import br.com.movieflix.entity.Category;
 import br.com.movieflix.entity.Movie;
 import br.com.movieflix.entity.Streaming;
 import br.com.movieflix.repository.MovieRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -43,6 +45,8 @@ public class MovieService {
 
             List<Category> categories = this.findCategories(updateMovie.getCategories());
             List<Streaming> streamings = this.findStreamings(updateMovie.getStreamings());
+
+            JWTUserData principal = (JWTUserData) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
             Movie movie = optMovie.get();
             movie.setTitle(updateMovie.getTitle());
